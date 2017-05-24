@@ -68,7 +68,7 @@ Start a workflow - with parameters.
 
     param = WorkflowParameters()
     param.add(name="vmname", value="some_vm_name", _type="VC:VirtualMachine")
-    param.add(name="user", "some_user")
+    param.add(name="user", value="some_user")
 
     wf_run = wf.start(param)
     print("Workflow state: %s" % wf_run.state)
