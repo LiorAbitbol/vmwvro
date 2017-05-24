@@ -29,54 +29,82 @@ Installation
     $ pip install vmwvro
 
 Quickstart
-----------
+==========
 
-Create a Session object. Session object contains the Url and authentication information for the VMware vRealize Orchestrator appliance.
+This guide will give you an introduction on how to get started with ``vmwvro``.
 
-.. code-block:: python
+Interacting with vRO
+--------------------
 
-    from vmwvro import Session
-
-    vro_url = 'https://some_vro_server:8281'
-    vro_usr = 'some_user'
-    vro_pwd = 'some_password'
-
-    session = Session(url=vro_url, username=vro_usr, password=vro_pwd)
-
-Create a Client object and pass in the session object. Client object exposes methods to interact with VMware vRealize Orchestrator.
+Interacting with VMware vRealize Orchestrator requires a Client object. The Client object exposes methods to manage Workflows. The following code sample illustrates how to create a Client object:
 
 .. code-block:: python
 
-    from vmwvro import Client
+    >>> from vmwvro import Client, Session
+    >>> vro_url = "https://my_vro_server:8281"
+    >>> vro_usr = "my_username"
+    >>> vro_pwd = "my_password"
+    >>> client = Client(Session(url=vro_url, username=vro_usr, password=vro_pwd))
 
-    client = Client(session)
+The Session object can also except the following optional parameters:
 
-Start a workflow - without any parameters.
+* verify_ssl -- verifies SSL certification, by default it is set to False
+* disable_warnings -- disables warnings, by default it is set to True
 
-.. code-block:: python
+Once you have a Client instance, you can proceed with the following examples.
 
-    wf = client.get_workflow(workflow_id)
+Get Workflow Id
+---------------
 
-    wf_run = wf.start()
-    print("Workflow state: %s" % wf_run.state)
-
-Start a workflow - with parameters.
-
-.. code-block:: python
-
-    from vmwvro.workflows import WorkflowParameters
-
-    param = WorkflowParameters()
-    param.add(name="vmname", value="some_vm_name", _type="VC:VirtualMachine")
-    param.add(name="user", value="some_user")
-
-    wf_run = wf.start(param)
-    print("Workflow state: %s" % wf_run.state)
-
-Wait for a workflow to complete.
+You can retrieve the Workflow Id by name or keywords lookup. The following code illustrates how to get the Workflow:
 
 .. code-block:: python
 
-    wf_run.wait_until_complete()
-    print("Workflow completed with state: %s" % wf_run.state)
+    >>> wf_id = client.find_workflow_id_by_name("my cool workflow")
+    >>> print(wf_id)
+    1a20863f-549b-47e4-a9db-361ea4fa2f69
+    >>> wf_id = client.find_workflow_id_by_keyword("cool")
+    >>> print(wf_id)
+    1a20863f-549b-47e4-a9db-361ea4fa2f69
+
+Run a Workflow
+--------------
+
+In order to start a Workflow, you will need to know the Workflow Id of the Workflow. You can use the above example to retrieve the Id if you know the name of the Workflow.
+
+.. code-block:: python
+
+    >>> wf_id = "1a20863f-549b-47e4-a9db-361ea4fa2f69"
+    >>> wf = client.get_workflow(wf_id)
+    >>> wf_run = wf.start()
+    >>> print("Workflow state: %s" % wf_run.state)
+    Workflow state: running
+
+Passing Workflow Parameters
+---------------------------
+
+Many Workflows require one or more input parameters. The following code illustrates how to create and pass parameters to a Workflow:
+
+.. code-block:: python
+
+    >>> from vmwvro.workflows import WorkflowParameters
+    >>> param = WorkflowParameters()
+    >>> param.add(name="vmname", value="some_vm_name", _type="VC:VirtualMachine")
+    >>> param.add(name="user", value="some_user")
+    >>> wf_run = wf.start(param)
+    >>> print("Workflow state: %s" % wf_run.state)
+    Workflow state: running
+
+The add() method requires the name and value of the parameter. You can also specify tye type if it is not a string.
+
+Wait for Workflow to Complete
+-----------------------------
+
+After starting a Workflow, it may take a few seconds to a few minutes to complete. The following code illustrates how to wait for the Workflow to finish:
+
+.. code-block:: python
+
+    >>> wf_run.wait_until_complete()
+    >>> print("Workflow completed with state: %s" % wf_run.state)
+    Workflow completed with state: completed
 
