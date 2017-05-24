@@ -28,8 +28,8 @@ Installation
 
     $ pip install vmwvro
 
-Usage
------
+Quickstart
+----------
 
 Create a Session object. Session object contains the Url and authentication information for the VMware vRealize Orchestrator appliance.
 
