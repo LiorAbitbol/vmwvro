@@ -46,7 +46,7 @@ Connecting to VMware vRealize Orchestrator requires a Client object. The Client 
     >>> vro_pwd = "my_password"
     >>> client = Client(Session(url=vro_url, username=vro_usr, password=vro_pwd))
 
-The Session object can also except the following optional parameters:
+The Session object can also accept the following optional parameters:
 
 * verify_ssl -- verifies SSL certification, by default it is set to False
 * disable_warnings -- disables warnings, by default it is set to True
