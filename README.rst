@@ -53,24 +53,10 @@ The Session object can also accept the following optional parameters:
 
 Once you have a Client instance, you can proceed with the following examples.
 
-Get Workflow Id
----------------
-
-You can retrieve the Workflow Id by name or keywords lookup. The following code illustrates how to get the Workflow:
-
-.. code-block:: python
-
-    >>> wf_id = client.find_workflow_id_by_name("my cool workflow")
-    >>> print(wf_id)
-    1a20863f-549b-47e4-a9db-361ea4fa2f69
-    >>> wf_id = client.find_workflow_id_by_keyword("cool")
-    >>> print(wf_id)
-    1a20863f-549b-47e4-a9db-361ea4fa2f69
-
 Run a Workflow
 --------------
 
-In order to start a Workflow, you will need to know the Workflow Id of the Workflow. You can use the above example to retrieve the Id if you know the name of the Workflow.
+In order to start a Workflow, you will need to know the Workflow Id of the Workflow. 
 
 .. code-block:: python
 
