@@ -33,10 +33,10 @@ Quickstart
 
 This guide will give you an introduction on how to get started with ``vmwvro``.
 
-Interacting with vRO
---------------------
+Connecting to vRO
+-----------------
 
-Interacting with VMware vRealize Orchestrator requires a Client object. The Client object exposes methods to manage Workflows. The following code sample illustrates how to create a Client object:
+Connecting to VMware vRealize Orchestrator requires a Client object. The Client object exposes methods to manage Workflows. The following code sample illustrates how to create a Client object:
 
 .. code-block:: python
 
