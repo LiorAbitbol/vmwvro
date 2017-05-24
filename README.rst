@@ -81,7 +81,7 @@ Many Workflows require one or more input parameters. The following code illustra
     >>> print("Workflow state: %s" % wf_run.state)
     Workflow state: running
 
-The add() method requires the name and value of the parameter. You can also specify tye type if it is not a string.
+The add() method requires the name and value of the parameter. You can also specify the type if it is not a string.
 
 Wait for Workflow to Complete
 -----------------------------
